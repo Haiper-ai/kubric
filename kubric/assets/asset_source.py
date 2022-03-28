@@ -64,6 +64,12 @@ class AssetSource(ClosableResource):
       manifest_path: PathLike,
       scratch_dir: Optional[PathLike] = None
   ) -> "AssetSource":
+    if manifest_path == "gs://kubric-public/assets/ShapeNetCore.v2.json":
+      raise ValueError(f"The path `{manifest_path}` is a placeholder for the real path. "
+                       "Please visit https://shapenet.org, agree to terms and conditions."
+                       "After logging in, you will find the manifest URL here:"
+                       "https://shapenet.org/download/kubric")
+
     manifest_path = file_io.as_path(manifest_path)
     manifest = file_io.read_json(manifest_path)
     name = manifest.get("name", manifest_path.stem)  # default to filename
